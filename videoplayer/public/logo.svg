@@ -1,0 +1,27 @@
+<svg viewBox="0 0 90 60" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background with sharp gradient -->
+  <rect width="90" height="60" rx="15" fill="url(#background-gradient)"/>
+  
+  <!-- Gradient for the background -->
+  <defs>
+    <linearGradient id="background-gradient" x1="0" y1="0" x2="90" y2="60" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#1A1A1A"/>
+      <stop offset="100%" stop-color="#333333"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Sharp diamond shape -->
+  <polygon points="45,10 80,30 45,50 10,30" fill="url(#diamond-gradient)" stroke="#00FFCC" stroke-width="2"/>
+  
+  <!-- Gradient for the diamond -->
+  <defs>
+    <linearGradient id="diamond-gradient" x1="10" y1="30" x2="80" y2="30" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#00FFCC"/>
+      <stop offset="100%" stop-color="#00BFFF"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Modern lines for sharpness -->
+  <line x1="0" y1="0" x2="90" y2="60" stroke="#FFFFFF" stroke-width="1" stroke-opacity="0.2"/>
+  <line x1="90" y1="0" x2="0" y2="60" stroke="#FFFFFF" stroke-width="1" stroke-opacity="0.2"/>
+</svg>
