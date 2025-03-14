@@ -1,55 +1,68 @@
-"use client"
+"use client";
 
-import { SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarMenu, SidebarMenuButton,SidebarMenuItem } from "@/components/ui/sidebar";
-import { HomeIcon, PlaySquareIcon, FlameIcon, HistoryIcon, ThumbsUpIcon, ListVideoIcon } from "lucide-react";
+import {
+  SidebarGroup,
+  SidebarGroupContent,
+  SidebarGroupLabel,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+} from "@/components/ui/sidebar";
+import { HistoryIcon, ListVideoIcon, ThumbsUpIcon } from "lucide-react";
 import Link from "next/link";
+import { useClerk, useAuth } from "@clerk/nextjs";
 
 const items = [
-    {
-      title: "History",
-      url: "/playlists/history",
-      icon: HistoryIcon,
-      auth: true,
-    },
-    {
-      title: "Like",
-      url: "/playlists/liked",
-      icon: ThumbsUpIcon,
-      auth: true,
-    },
-    {
-      title: "All playlists",
-      url: "/playlists",
-      icon: ListVideoIcon,
-      auth: true,
-    },
-  ];
+  {
+    title: "History",
+    url: "/playlists/history",
+    icon: HistoryIcon,
+    auth: true,
+  },
+  {
+    title: "Like",
+    url: "/playlists/liked",
+    icon: ThumbsUpIcon,
+    auth: true,
+  },
+  {
+    title: "All playlists",
+    url: "/playlists",
+    icon: ListVideoIcon,
+    auth: true,
+  },
+];
 
-   
 export const PersonalSection = () => {
-    return (
-        <SidebarGroup>
-            <SidebarGroupLabel>You</SidebarGroupLabel>
-            <SidebarGroupContent>
-                <SidebarMenu>
-                    {items.map((item) => (
-                        <SidebarMenuItem key={item.title}>
-                            <SidebarMenuButton
-                                tooltip={item.title}
-                                asChild
-                                isActive={false}
-                                onClick={() => {}}
-
-                            >
-                                <Link href={item.url} className="flex items-center gap-4">
-                                    <item.icon /> 
-                                    <span className="text-sm">{item.title}</span>
-                                </Link>
-                            </SidebarMenuButton>
-                        </SidebarMenuItem>
-                        ))}
-                </SidebarMenu>
-            </SidebarGroupContent>
-        </SidebarGroup>
-    )
-}
+  const clerk = useClerk();
+  const { isSignedIn } = useAuth();
+  return (
+    <SidebarGroup>
+      <SidebarGroupLabel>You</SidebarGroupLabel>
+      <SidebarGroupContent>
+        <SidebarMenu>
+          {items.map((item) => (
+            <SidebarMenuItem key={item.title}>
+              <SidebarMenuButton
+                tooltip={item.title}
+                asChild
+                isActive={false} // TODO: Change to look at curent pathname
+                onClick={(e) => {
+                  if (!isSignedIn && item.auth) {
+                    e.preventDefault();
+                    return clerk.openSignIn();
+                  }
+                }} // TODO: Do something on click
+              >
+                <Link href={item.url} className="flex items-center gap-4">
+                  <item.icon />
+                  <span className="text-sm">{item.title}</span>
+                </Link>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+          ))}
+        </SidebarMenu>
+      </SidebarGroupContent>
+    </SidebarGroup>
+  );
+};
