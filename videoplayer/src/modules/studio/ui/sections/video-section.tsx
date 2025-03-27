@@ -15,10 +15,11 @@ import {
 } from "@/components/ui/table";
 import Link from "next/link";
 // import { VideoThumbnail } from "@/modules/videos/ui/components/video-thumbnail";
-// import { snakeCaseToTitle } from "@/lib/utils";
+import { snakeCaseToTitle } from "@/lib/utils";
 import { format } from "date-fns";
 import { Globe2Icon, LockIcon } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
+import { VideoThumbnail } from "@/modules/videos/ui/components/video-thumbnail";
 
 export const VideosSection = () => {
   return (
@@ -82,6 +83,10 @@ const VideosSectionSuspense = () => {
     }
   );
 
+  function snakeCaseToTitle(arg0: string): import("react").ReactNode {
+    throw new Error("Function not implemented.");
+  }
+
   return (
     <div>
       <div className="border-y">
@@ -107,7 +112,7 @@ const VideosSectionSuspense = () => {
                   legacyBehavior
                 >
                   <TableRow className="cursor-pointer">
-                    {/* <TableCell>
+                    <TableCell>
                       <div className="flex items-center gap-4">
                         <div className="relative w-36 aspect-video shrink-0">
                           <VideoThumbnail
@@ -126,27 +131,27 @@ const VideosSectionSuspense = () => {
                           </span>
                         </div>
                       </div>
-                    </TableCell> */}
-                    {/* <TableCell>
+                    </TableCell>
+                    <TableCell>
                       <div className="flex items-center">
                         {video.visibility === "private" ? (
                           <LockIcon className="size-4 mr-2" />
                         ) : (
                           <Globe2Icon className="size mr-2" />
                         )}
-                        {snakeCaseToTitle(video.visibility)}
+                        {video.visibility}
                       </div>
-                    </TableCell> */}
-                    {/* <TableCell>
+                    </TableCell>
+                    <TableCell>
                       <div className="flex items-center justify-center">
-                        {snakeCaseToTitle(video.muxStatus || "error")}
+                        {/* {snakeCaseToTitle(video.muxStatus || "error")} */}
                       </div>
-                    </TableCell> */}
-                    {/* <TableCell>
+                    </TableCell>
+                    <TableCell>
                       <div>
                         {format(new Date(video.createdAt), "d MMM yyyy")}
                       </div>
-                    </TableCell> */}
+                    </TableCell>
                     {/* <TableCell>4</TableCell>
                     <TableCell>5</TableCell>
                     <TableCell>6</TableCell> */}
