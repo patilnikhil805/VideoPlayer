@@ -59,12 +59,24 @@ const VideoSectionSkeleton = () => {
                     </div>
                   </div>
                 </TableCell>
-                <TableCell>Visibility</TableCell>
-                <TableCell>Status</TableCell>
-                <TableCell>Date</TableCell>
-                <TableCell>Views</TableCell>
-                <TableCell>Comments</TableCell>
-                <TableCell>Likes</TableCell>
+                <TableCell>
+                  <Skeleton className="h-4 w-20" />
+                </TableCell>
+                <TableCell>
+                  <Skeleton className="h-4 w-24" />
+                </TableCell>
+                <TableCell>
+                  <Skeleton className="h-4 w-20" />
+                </TableCell>
+                <TableCell className="text-right">
+                  <Skeleton className="h-4 w-12 ml-auto" />
+                </TableCell>
+                <TableCell className="text-right">
+                  <Skeleton className="h-4 w-20 ml-auto" />
+                </TableCell>
+                <TableCell className="text-right">
+                  <Skeleton className="h-4 w-20 ml-auto" />
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
@@ -96,7 +108,9 @@ const VideosSectionSuspense = () => {
               <TableHead className="pl-6 w-[510px]">Video</TableHead>
               <TableHead>Visibility</TableHead>
               <TableHead>Status</TableHead>
-              <TableHead>Date</TableHead>
+              <TableHead>
+                Date
+              </TableHead>
               <TableHead className="text-right">Views</TableHead>
               <TableHead className="text-right">Comments</TableHead>
               <TableHead className="text-right pr-6">Likes</TableHead>
@@ -143,8 +157,9 @@ const VideosSectionSuspense = () => {
                       </div>
                     </TableCell>
                     <TableCell>
-                      <div className="flex items-center justify-center">
-                        {/* {snakeCaseToTitle(video.muxStatus || "error")} */}
+                      <div className="flex">
+                        {(video.muxStatus || "error")} 
+                        {/* // add snakeCaseToTitle here later */}
                       </div>
                     </TableCell>
                     <TableCell>
