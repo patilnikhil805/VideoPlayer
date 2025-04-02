@@ -17,15 +17,15 @@ export const VideoView = ({ videoId }: VideoView) => {
         <div className="flex-1 min-w-0">
           <VideoSection videoId={videoId} />
           <div className="xl:hidden block mt-4">
-            {/* <SuggestionSection videoId={videoId} isManual /> */}
-            <SuggestionSection/>
+            <SuggestionSection videoId={videoId} isManual />
+            {/* <SuggestionSection/> */}
           </div>
           {/* <CommentSection videoId={videoId} /> */}
           <CommentSection videoId={videoId}/>
         </div>
         <div className="hidden xl:block w-full xl:w-[380px] 2xl:w-[460px] shrink-1">
-          {/* <SuggestionSection videoId={videoId} /> */}
-          <SuggestionSection />
+          <SuggestionSection videoId={videoId} />
+          {/* <SuggestionSection /> */}
         </div>
       </div>
     </div>

@@ -1,6 +1,6 @@
 import { db } from "@/db";
 // import { commentReactions, comments, users } from "@/db/schema";
-import { comments, users } from "@/db/schema";
+import { commentReactions, comments, users } from "@/db/schema";
 import {
   baseProcedure,
   createTRPCRouter,
@@ -104,15 +104,15 @@ export const commentsRouter = createTRPCRouter({
         userId = user.id;
       }
 
-    //   const viewerReactions = db.$with("viewer_reactions").as(
-    //     db
-    //       .select({
-    //         commentId: commentReactions.commentId,
-    //         type: commentReactions.type,
-    //       })
-    //       .from(commentReactions)
-    //       .where(inArray(commentReactions.userId, userId ? [userId] : []))
-    //   );
+      const viewerReactions = db.$with("viewer_reactions").as(
+        db
+          .select({
+            commentId: commentReactions.commentId,
+            type: commentReactions.type,
+          })
+          .from(commentReactions)
+          .where(inArray(commentReactions.userId, userId ? [userId] : []))
+      );
 
       const replies = db.$with("replies").as(
         db
@@ -137,49 +137,49 @@ export const commentsRouter = createTRPCRouter({
               // isNull(comments.parentId)
             )
           ),
-        // db
-        //   .with(viewerReactions, replies)
-        //   .select({
-        //     ...getTableColumns(comments),
-        //     user: users,
-        //     replyCount: replies.count,
-        //     likeCount: db.$count(
-        //       commentReactions,
-        //       and(
-        //         eq(commentReactions.type, "like"),
-        //         eq(commentReactions.commentId, comments.id)
-        //       )
-        //     ),
-        //     dislikeCount: db.$count(
-        //       commentReactions,
-        //       and(
-        //         eq(commentReactions.type, "dislike"),
-        //         eq(commentReactions.commentId, comments.id)
-        //       )
-        //     ),
-        //     viewerReaction: viewerReactions.type,
-        //   })
-        //   .from(comments)
-        //   .where(
-        //     and(
-        //       eq(comments.videoId, videoId),
-        //       parentId
-        //         ? eq(comments.parentId, parentId)
-        //         : isNull(comments.parentId),
-        //       cursor
-        //         ? or(
-        //             lt(comments.updatedAt, cursor.updatedAt),
-        //             and(
-        //               eq(comments.updatedAt, cursor.updatedAt),
-        //               lt(comments.id, cursor.id)
-        //             )
-        //           )
-        //         : undefined
-        //     )
-        //   )
+        db
+          .with(viewerReactions, replies)
+          .select({
+            ...getTableColumns(comments),
+            user: users,
+            replyCount: replies.count,
+            likeCount: db.$count(
+              commentReactions,
+              and(
+                eq(commentReactions.type, "like"),
+                eq(commentReactions.commentId, comments.id)
+              )
+            ),
+            dislikeCount: db.$count(
+              commentReactions,
+              and(
+                eq(commentReactions.type, "dislike"),
+                eq(commentReactions.commentId, comments.id)
+              )
+            ),
+            viewerReaction: viewerReactions.type,
+          })
+          .from(comments)
+          .where(
+            and(
+              eq(comments.videoId, videoId),
+              parentId
+                ? eq(comments.parentId, parentId)
+                : isNull(comments.parentId),
+              cursor
+                ? or(
+                    lt(comments.updatedAt, cursor.updatedAt),
+                    and(
+                      eq(comments.updatedAt, cursor.updatedAt),
+                      lt(comments.id, cursor.id)
+                    )
+                  )
+                : undefined
+            )
+          )
           .innerJoin(users, eq(comments.userId, users.id))
-        //   .leftJoin(viewerReactions, eq(comments.id, viewerReactions.commentId))
-        //   .leftJoin(replies, eq(comments.id, replies.parentId))
+          .leftJoin(viewerReactions, eq(comments.id, viewerReactions.commentId))
+          .leftJoin(replies, eq(comments.id, replies.parentId))
           .orderBy(desc(comments.updatedAt), desc(comments.id))
           .limit(limit + 1),
       ]);

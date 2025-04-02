@@ -52,7 +52,9 @@ export const CommentForm = ({
   });
 
   const form = useForm<z.infer<typeof commentsInsertSchema>>({
-    // resolver: zodResolver(commentsInsertSchema.omit({ userId: true })),
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-expect-error
+    resolver: zodResolver(commentsInsertSchema.omit({ userId: true })),
     defaultValues: {
       parentId: parentId,
       videoId: videoId,

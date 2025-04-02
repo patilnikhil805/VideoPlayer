@@ -5,11 +5,9 @@ import { trpc } from "@/trpc/client";
 import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { VideoPlayer, VideoPlayerSkeleton } from "../components/video-player";
-// import { VideoBanner } from "../components/video-banner";
-// import { VideoTopRow, VideoTopRowSkeleton } from "../components/video-top-row";
-import { useAuth } from "@clerk/nextjs";
 import { VideoBanner } from "../components/video-banner";
 import { VideoTopRow, VideoTopRowSkeleton } from "../components/video-top-row";
+import { useAuth } from "@clerk/nextjs";
 
 interface VideoSectionProps {
   videoId: string;
